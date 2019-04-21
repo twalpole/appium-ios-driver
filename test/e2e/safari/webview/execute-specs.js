@@ -6,6 +6,7 @@ import { MOCHA_SAFARI_TIMEOUT } from '../../helpers/session';
 
 
 const SCROLL_INTO_VIEW = `return arguments[0].scrollIntoView(true);`;
+const SCROLL_ALL_INTO_VIEW = `return arguments[0].forEach( el => el.scrollIntoView(true));`;
 const GET_RIGHT_INNERHTML = `return document.body.innerHTML.indexOf('I am some page content') > 0`;
 const GET_WRONG_INNERHTML = `return document.body.innerHTML.indexOf('I am not some page content') > 0`;
 const GET_ELEM_BY_TAGNAME = `return document.getElementsByTagName('a');`;
@@ -45,6 +46,11 @@ describe('safari - webview - execute', function () {
       it('should convert selenium element arg to webview element', async function () {
         let el = await driver.findElement('id', 'useragent');
         await driver.execute(SCROLL_INTO_VIEW, [el]);
+      });
+
+      it('should convert selenium element in an array arg to webview element', async function () {
+        let el = await driver.findElement('id', 'useragent');
+        await driver.execute(SCROLL_ALL_INTO_VIEW, [[el]]);
       });
 
       it('should catch stale or undefined element as arg', async function () {

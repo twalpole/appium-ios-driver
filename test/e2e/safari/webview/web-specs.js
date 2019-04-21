@@ -25,5 +25,16 @@ describe('Web', function () {
         driver.convertElementsForAtoms(args).should.eql([{ELEMENT: 123}]);
       }
     });
+    it('should parse W3C and MJSONWP elements ids in arrays', function () {
+      for (const elType of ['ELEMENT', util.W3C_WEB_ELEMENT_IDENTIFIER]) {
+        driver.webElementIds = [987];
+        const args = [
+          [{
+            [elType]: 5000
+          }]
+        ];
+        driver.convertElementsForAtoms(args).should.eql([[{ELEMENT: 987}]]);
+      }
+    });
   });
 });
